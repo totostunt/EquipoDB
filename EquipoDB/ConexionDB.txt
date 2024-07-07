@@ -1,0 +1,29 @@
+Para establecer una conexión con una base de datos,
+ es necesario indicar en el código el nombre del servidor, 
+el nombre de la base de datos, y las credenciales del usuario 
+con su contraseña. Una vez que se ha creado la conexión, 
+esta se abre para permitir la comunicación con la base de datos y
+ luego se cierra cuando ya no se necesita.
+ Durante el tiempo que la conexión está abierta, 
+es posible ejecutar consultas para recuperar los datos necesarios
+ desde la base de datos.
+
+Aquí tienes un ejemplo de cómo se estructurarían estas líneas
+ de código:
+
+string connectionString = "Data Source=DESKTOP-O0OIP5I\\LOCALDB#5EE28CCE;Initial Catalog=EquipoBDD;user=DESKTOP-O0OIP5I\\Maki";
+
+using (SqlConnection connection = new SqlConnection(connectionString)) //Crearla
+
+connection.Open(); //open
+
+SqlCommand command = new SqlCommand(query, connection); // Comando sql
+
+SqlDataReader reader = command.ExecuteReader(); // results
+
+while (reader.Read())  {Console.WriteLine($"{reader[0]}, {reader[1]}, {reader[2]}");} // leer resultados
+
+reader.Close(); // close reader
+
+connection.Close(); // cierra la conexion con la db
+

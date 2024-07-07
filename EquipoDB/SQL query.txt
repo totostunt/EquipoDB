@@ -1,0 +1,81 @@
+/*
+create table jugadores (
+	
+	id int identity(1,1) primary key,
+	nombre varchar(50) not null,
+	dni int not null,
+	fecNac date not null,
+	localidad int not null,
+	equipo int not null
+);
+
+create table localidad (
+
+	id int identity(1,1) primary key,
+	provincia varchar(100) not null,
+	departamento varchar(100) not null,
+	CP int not null
+);
+
+create table equipos (
+
+	id int identity(1,1) primary key,
+	nombre varchar(50) not null,
+	entrenador int not null
+);
+
+create table entrenador (
+	
+	id int identity(1,1) primary key,
+	nombre varchar(50) not null,
+	dni int not null,
+	fecNac date not null
+);
+
+use terciario;
+
+--Se agregan los entrenadores.
+insert into entrenador (nombre, dni, fecNac) values ('Armando', 12312312, '20-09-1980');
+insert into entrenador (nombre, dni, fecNac) values ('Pedro', 12312312, '18-05-1994');
+select * from entrenador;
+
+--Se agregan los equipos.
+insert into equipos(nombre, entrenador) values ('Boca', 1);
+insert into equipos(nombre, entrenador) values ('Sarmiento', 2);
+select * from equipos;
+
+--Se agregan las localidades.
+insert into localidad (provincia, departamento, CP) values ('Buenos Aires', 'Ituzaingó', 1714);
+insert into localidad (provincia, departamento, CP) values ('Buenos Aires', 'Moron', 1708);
+insert into localidad (provincia, departamento, CP) values ('Buenos Aires', 'Merlo', 1721);
+select * from localidad;
+
+--Se agregan los jugadores.
+insert into jugadores (nombre, dni, fecNac, localidad, equipo) values ('Pedro', 12312312, '17-09-2005', 1, 1);
+insert into jugadores (nombre, dni, fecNac, localidad, equipo) values ('Jorge', 12312312, '09-12-2001', 2, 1);
+insert into jugadores (nombre, dni, fecNac, localidad, equipo) values ('Julio', 12312312, '21-05-2000', 3, 2);
+insert into jugadores (nombre, dni, fecNac, localidad, equipo) values ('Roberto', 12312312, '05-03-1990', 1, 2);
+select * from jugadores;
+
+--Se crean las FK
+alter table equipos
+	add constraint FK_EQ_EN
+	foreign key (entrenador)
+	references entrenador(id);
+
+alter table jugadores
+	add constraint FK_EQ_JUG
+	foreign key (equipo)
+	references equipos(id);
+
+alter table jugadores
+	add constraint FK_JUG_LOC
+	foreign key (localidad)
+	references localidad(id);
+
+use terciario
+select * from jugadores;
+select * from localidad;
+select * from equipos;
+select * from entrenador;
+/*
